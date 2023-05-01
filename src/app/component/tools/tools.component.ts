@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild, HostListener } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { OperationType } from 'src/app/model/operationtype.model';
 import { Tool } from 'src/app/model/tool.model';
@@ -7,6 +7,7 @@ import { ToolService } from 'src/app/service/tool.service';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { lastValueFrom } from 'rxjs';
+import { MediaService } from 'src/app/service/media.service';
 
 @Component({
   selector: 'app-tools',
@@ -14,19 +15,32 @@ import { lastValueFrom } from 'rxjs';
   styleUrls: ['./tools.component.scss']
 })
 export class ToolsComponent {
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: { target: { innerWidth: any; }; }) {
+    this.changeDetectorRef.detectChanges();
+  }
+
   @ViewChild(MatSort) sort!: MatSort;
   columnHeaders: string[] = ['id', 'name', 'operationTypeId', 'operationTypeName', 'desc'];
   operationTypeFormControl = new FormControl('');
   operationTypes: OperationType[] = [];
   tools: Tool[] = [];
   dataSource: any;
-  isLoading = true;
-  resultsLength = 0;
+  isLoading: boolean = true;
+  isBelowMd: boolean = false;
+  resultsLength: number = 0;
 
   constructor(
     private operationTypeService: OperationTypeService,
-    private toolService: ToolService
-  ) { }
+    private toolService: ToolService,
+    private mediaService: MediaService,
+    private changeDetectorRef: ChangeDetectorRef
+  ) {
+    this.mediaService.isBelowMd().subscribe(x => {
+      this.isBelowMd = x.matches;
+    });
+  }
 
   ngOnInit() {
     this.initData();

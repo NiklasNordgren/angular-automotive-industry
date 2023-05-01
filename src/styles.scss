@@ -1,0 +1,29 @@
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.orange {
+    color: #EE8434 !important;
+}
+
+.white {
+    color: #fff;
+}
+
+.mat-mdc-card-header {
+    padding: 10px 16px 0 !important;
+}
+
+.fs-36 {
+    font-size: 36px;
+}

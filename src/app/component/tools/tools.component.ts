@@ -15,7 +15,7 @@ import { lastValueFrom } from 'rxjs';
 })
 export class ToolsComponent {
   @ViewChild(MatSort) sort!: MatSort;
-  columnHeaders: string[] = ['id', 'name', 'operationTypeId', 'operationTypeName'];
+  columnHeaders: string[] = ['id', 'name', 'operationTypeId', 'operationTypeName', 'desc'];
   operationTypeFormControl = new FormControl('');
   operationTypes: OperationType[] = [];
   tools: Tool[] = [];

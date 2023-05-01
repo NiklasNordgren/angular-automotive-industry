@@ -1,6 +1,6 @@
 <div class="mat-typography app-frame mat-app-background">
 
-    <div *ngIf="isBelowMd; then mobile else browser"></div>
+    <div *ngIf="isBelowLg; then mobile else browser"></div>
 
     <ng-template #mobile>
         <app-toolbar>

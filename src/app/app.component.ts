@@ -15,15 +15,15 @@ export class AppComponent {
   }
   @HostBinding('class') componentCssClass = 'dark-theme';
   darkThemeActive: boolean = false;
-  isBelowMd: boolean = false;
+  isBelowLg: boolean = false;
 
   constructor(
     private overlayContainer: OverlayContainer,
     private changeDetectorRef: ChangeDetectorRef,
     private mediaService: MediaService
   ) {
-    this.mediaService.isBelowMd().subscribe(x => {
-      this.isBelowMd = x.matches;
+    this.mediaService.isBelowLg().subscribe(x => {
+      this.isBelowLg = x.matches;
     });
     this.toggleTheme();
   }

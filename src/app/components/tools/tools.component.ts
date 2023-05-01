@@ -69,6 +69,7 @@ export class ToolsComponent {
   initFormControls(): void {
     this.operationTypeFormControl.valueChanges.subscribe(selectedOperationTypes => {
       this.dataSource = new MatTableDataSource(this.filterToolsByOperationTypes(this.tools, selectedOperationTypes));
+      this.dataSource.sort = this.sort;
     });
   }
 

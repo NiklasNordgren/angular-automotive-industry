@@ -4,7 +4,7 @@
             <span class="material-symbols-outlined fs-36 orange">
                 directions_car
             </span>
-            <span class="ms-1 white">AutoParts</span>
+            <span class="ms-1 logo-text">AutoParts</span>
         </a>
         <button [routerLink]="['/home']" mat-flat-button color="primary">
             <mat-icon fontSet="material-symbols-outlined">home</mat-icon>
@@ -26,16 +26,7 @@
             <mat-icon fontSet="material-symbols-outlined">contact_support</mat-icon>
             <span routerLinkActive="underline-white">Contact</span>
         </button>
-
         <span class="spacer"></span>
-
-        <button mat-icon-button class="">
-            <mat-icon>search</mat-icon>
-        </button>
-        <button mat-icon-button class="" (click)="toggleTheme()">
-            <mat-icon>dark_mode
-            </mat-icon>
-        </button>
-
+        <ng-content></ng-content>
     </div>
 </mat-toolbar>

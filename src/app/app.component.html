@@ -1,5 +1,17 @@
 <div class="mat-typography app-frame mat-app-background">
-    <app-toolbar></app-toolbar>
+    <app-toolbar>
+        <div *ngIf="darkThemeActive; then thenBlock else elseBlock"></div>
+        <ng-template #thenBlock>
+            <button mat-icon-button (click)="toggleTheme()">
+                <mat-icon>sunny</mat-icon>
+            </button>
+        </ng-template>
+        <ng-template #elseBlock>
+            <button mat-icon-button (click)="toggleTheme()">
+                <mat-icon>dark_mode</mat-icon>
+            </button>
+        </ng-template>
+    </app-toolbar>
     <div class="container mt-3 mb-3">
         <router-outlet></router-outlet>
     </div>

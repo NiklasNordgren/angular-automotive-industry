@@ -243,7 +243,9 @@ $theme: mat.define-dark-theme((color: (primary: $theme-primary,
     ));
 
 // Theme Init
-@include mat.all-component-themes($theme);
+.dark-theme {
+  @include mat.all-component-themes($theme);
+}
 
 // Specific component overrides, pieces that are not in line with the general theming
 

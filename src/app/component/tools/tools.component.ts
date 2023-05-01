@@ -37,7 +37,6 @@ export class ToolsComponent {
     await this.initOperationTypes();
     await this.initTools();
     this.setOperationTypeNameOfTools(this.tools);
-    this.resultsLength = this.tools.length;
     this.isLoading = false;
     this.dataSource = new MatTableDataSource(this.tools);
     this.dataSource.sort = this.sort;
@@ -46,6 +45,7 @@ export class ToolsComponent {
   private async initTools() {
     const tools = this.toolService.getAll();
     this.tools = await lastValueFrom(tools);
+    this.resultsLength = this.tools.length;
   }
 
   private async initOperationTypes() {

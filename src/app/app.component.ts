@@ -1,5 +1,6 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { Component, HostBinding } from '@angular/core';
+import { Component, HostBinding, ChangeDetectorRef, HostListener } from '@angular/core';
+import { MediaMatcher } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-root',
@@ -8,10 +9,28 @@ import { Component, HostBinding } from '@angular/core';
 })
 export class AppComponent {
 
+  @HostListener('window:resize', ['$event'])
+  onResize(event: { target: { innerWidth: any; }; }) {
+    this.changeDetectorRef.detectChanges();
+  }
   @HostBinding('class') componentCssClass = 'dark-theme';
-  darkThemeActive: boolean = true;
+  darkThemeActive: boolean = false;
+  mobileQuery: MediaQueryList;
+  private _mobileQueryListener(): void { }
 
-  constructor(private overlayContainer: OverlayContainer) { }
+  constructor(
+    private overlayContainer: OverlayContainer,
+    private changeDetectorRef: ChangeDetectorRef,
+    private media: MediaMatcher
+  ) {
+    this.toggleTheme();
+    this.mobileQuery = this.media.matchMedia('(max-width: 819px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+  }
+
+  ngOnInit(): void {
+    this.changeDetectorRef.detectChanges();
+  }
 
   toggleTheme(): void {
     this.darkThemeActive = !this.darkThemeActive;

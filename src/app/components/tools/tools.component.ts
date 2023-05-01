@@ -21,6 +21,7 @@ export class ToolsComponent {
   tools: Tool[] = [];
   dataSource: any;
   isLoading = true;
+  resultsLength = 0;
 
   constructor(
     private operationTypeService: OperationTypeService,
@@ -36,6 +37,7 @@ export class ToolsComponent {
     await this.initOperationTypes();
     await this.initTools();
     this.setOperationTypeNameOfTools(this.tools);
+    this.resultsLength = this.tools.length;
     this.isLoading = false;
     this.dataSource = new MatTableDataSource(this.tools);
     this.dataSource.sort = this.sort;

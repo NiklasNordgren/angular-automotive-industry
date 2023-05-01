@@ -6,7 +6,7 @@ import { OperationTypeService } from 'src/app/service/operationtype.service';
 import { ToolService } from 'src/app/service/tool.service';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Subscription, lastValueFrom } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-tools',
@@ -14,14 +14,13 @@ import { Subscription, lastValueFrom } from 'rxjs';
   styleUrls: ['./tools.component.scss']
 })
 export class ToolsComponent {
-  private subscriptions: Subscription = new Subscription();
   @ViewChild(MatSort) sort!: MatSort;
-  displayedColumns: string[] = ['id', 'name', 'operationTypeId', 'operationTypeName'];
+  columnHeaders: string[] = ['id', 'name', 'operationTypeId', 'operationTypeName'];
   operationTypeFormControl = new FormControl('');
   operationTypes: OperationType[] = [];
-  allTools: Tool[] = [];
-  filteredTools: Tool[] = [];
+  tools: Tool[] = [];
   dataSource: any;
+  isLoading = true;
 
   constructor(
     private operationTypeService: OperationTypeService,
@@ -34,14 +33,22 @@ export class ToolsComponent {
   }
 
   async initData(): Promise<void> {
+    await this.initOperationTypes();
+    await this.initTools();
+    this.setOperationTypeNameOfTools(this.tools);
+    this.isLoading = false;
+    this.dataSource = new MatTableDataSource(this.tools);
+    this.dataSource.sort = this.sort;
+  }
+
+  private async initTools() {
+    const tools = this.toolService.getAll();
+    this.tools = await lastValueFrom(tools);
+  }
+
+  private async initOperationTypes() {
     const operationTypes = this.operationTypeService.getAll();
     this.operationTypes = await lastValueFrom(operationTypes);
-    const tools = this.toolService.getAll();
-    this.allTools = await lastValueFrom(tools);
-    this.setOperationTypeNameOfTools(this.allTools);
-    this.filteredTools = this.allTools;
-    this.dataSource = new MatTableDataSource(this.filteredTools);
-    this.dataSource.sort = this.sort;
   }
 
   setOperationTypeNameOfTools(tools: Tool[]): void {
@@ -59,7 +66,7 @@ export class ToolsComponent {
 
   initFormControls(): void {
     this.operationTypeFormControl.valueChanges.subscribe(selectedOperationTypes => {
-      this.dataSource = new MatTableDataSource(this.filterToolsByOperationTypes(this.allTools, selectedOperationTypes));
+      this.dataSource = new MatTableDataSource(this.filterToolsByOperationTypes(this.tools, selectedOperationTypes));
     });
   }
 

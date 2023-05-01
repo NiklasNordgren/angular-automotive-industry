@@ -1,6 +1,6 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Component, HostBinding, ChangeDetectorRef, HostListener } from '@angular/core';
-import { MediaMatcher } from '@angular/cdk/layout';
+import { MediaService } from './service/media.service';
 
 @Component({
   selector: 'app-root',
@@ -15,17 +15,17 @@ export class AppComponent {
   }
   @HostBinding('class') componentCssClass = 'dark-theme';
   darkThemeActive: boolean = false;
-  mobileQuery: MediaQueryList;
-  private _mobileQueryListener(): void { }
+  isBelowMd: boolean = false;
 
   constructor(
     private overlayContainer: OverlayContainer,
     private changeDetectorRef: ChangeDetectorRef,
-    private media: MediaMatcher
+    private mediaService: MediaService
   ) {
+    this.mediaService.isBelowMd().subscribe(x => {
+      this.isBelowMd = x.matches;
+    });
     this.toggleTheme();
-    this.mobileQuery = this.media.matchMedia('(max-width: 819px)');
-    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
   }
 
   ngOnInit(): void {

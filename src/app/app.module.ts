@@ -22,12 +22,12 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
-import { HomeComponent } from './components/home/home.component';
-import { ToolbarComponent } from './components/toolbar/toolbar.component';
-import { AboutComponent } from './components/about/about.component';
-import { ContactComponent } from './components/contact/contact.component';
-import { ToolsComponent } from './components/tools/tools.component';
-import { InvestorsComponent } from './components/investors/investors.component';
+import { HomeComponent } from './component/home/home.component';
+import { ToolbarComponent } from './component/toolbar/toolbar.component';
+import { AboutComponent } from './component/about/about.component';
+import { ContactComponent } from './component/contact/contact.component';
+import { ToolsComponent } from './component/tools/tools.component';
+import { InvestorsComponent } from './component/investors/investors.component';
 
 @NgModule({
   declarations: [
